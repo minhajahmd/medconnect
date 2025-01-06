@@ -133,6 +133,7 @@ const RegisterForm = ({user}: {user: User}) => {
         </div>
 
         <div className="flex flex-col gap-6 xl:flex-row">
+<<<<<<< HEAD
         <CustomFormField 
           fieldType={FormFieldType.INPUT}
           control={form.control}
@@ -173,6 +174,14 @@ const RegisterForm = ({user}: {user: User}) => {
             </div>
         </section>
 
+=======
+
+        </div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+
+        </div>
+
+>>>>>>> fa9b943ec9ef46ef17841d7a625683294acea445
         <div className="flex flex-col gap-6 xl:flex-row">
 
         </div>
