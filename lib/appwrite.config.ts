@@ -11,8 +11,6 @@ export const {
 const client = new sdk.Client();
 
 // make sure that the environment variables are read correctly
-// console.log('Project ID:', PROJECT_ID);
-// console.log('API Key:', API_KEY);
 // console.log('Endpoint:', ENDPOINT);
 
 // configure client to know which Appwrite server to talk to and which project it belongs to.
