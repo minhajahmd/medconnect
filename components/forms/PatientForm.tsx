@@ -28,6 +28,8 @@ export enum FormFieldType {
 
 
 const PatientForm = () => {
+
+  //This hook from Next.js is used for programmatic navigation. It allows us to redirect users to different pages.
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false); /*manages state*/
@@ -35,6 +37,7 @@ const PatientForm = () => {
   // Defining the form of the form "UserFormValidation"
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
+    //set initial values for the form fields.
     defaultValues: {
       name: "",
       email: "",
@@ -52,6 +55,7 @@ const PatientForm = () => {
 
       const user = await createUser(userData);
       
+      //redirect to the registration page if the user is successfully created.
       if(user) router.push(`/patients/${user.$id}/register`)
 
     } catch (error) {
