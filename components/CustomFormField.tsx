@@ -21,6 +21,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger } from "./ui/select"
 import { SelectValue } from "@radix-ui/react-select"
 import { Textarea } from "./ui/textarea"
+import { Checkbox } from "./ui/checkbox"
 
 
 { /* Control usage
@@ -53,6 +54,9 @@ interface CustomProps{
     children?: React.ReactNode,
     renderSkeleton?: (field: any ) => React.ReactNode,
   }
+
+  // SKELETON allows us to pass anything we want
+
 
 const RenderField = ({field, props}: {field: any; props: CustomProps}) => {
 
@@ -137,6 +141,21 @@ const RenderField = ({field, props}: {field: any; props: CustomProps}) => {
       )
     case FormFieldType.SKELETON:
       return renderSkeleton ? renderSkeleton(field) : null
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox 
+              id={props.name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+            <label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </label>
+          </div>
+        </FormControl>
+      )
     default:
       break;
   }
