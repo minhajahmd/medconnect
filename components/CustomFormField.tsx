@@ -2,14 +2,13 @@
 
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Control, Field } from "react-hook-form"
+import { Control } from "react-hook-form"
 import { FormFieldType } from "./forms/PatientForm"
 import Image from "next/image"
 import 'react-phone-number-input/style.css'
@@ -18,8 +17,7 @@ import { E164Number } from "libphonenumber-js/core"
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Select, SelectContent, SelectTrigger } from "./ui/select"
-import { SelectValue } from "@radix-ui/react-select"
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select"
 import { Textarea } from "./ui/textarea"
 import { Checkbox } from "./ui/checkbox"
 
@@ -38,7 +36,6 @@ import { Checkbox } from "./ui/checkbox"
  If you need to perform complex validation that involves multiple fields or
  custom logic, using control with Controller or useController can simplify the process.
 */}
-
 
 interface CustomProps{
     control: Control<any>,
@@ -171,7 +168,7 @@ const CustomFormField = (props: CustomProps) => {
     render={({ field }) => (
       <FormItem className="flex-1">
         {fieldType !== FormFieldType.CHECKBOX && label && (
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="shad-input-label">{label}</FormLabel>
         )}
 
       {/* when using a component, also provide it with the necessary props that it expects*/}

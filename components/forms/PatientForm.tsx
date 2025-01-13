@@ -49,7 +49,7 @@ const PatientForm = () => {
   async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
     
-
+  //creating a user with the data provided by the user
     try {
       const userData = { name, email, phone };
 
