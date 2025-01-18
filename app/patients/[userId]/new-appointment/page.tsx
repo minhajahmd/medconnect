@@ -29,7 +29,7 @@ export default async function NewAppointment(props: SearchParamProps) {
 
           />
           
-        <p className="justify-items-end text-dark-600 xl:text-left">
+        <p className="copyright mt-9">
             © 2024 MedConnect
         </p>
 
