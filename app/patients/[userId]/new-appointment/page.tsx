@@ -12,7 +12,7 @@ export default async function NewAppointment(props: SearchParamProps) {
   const patient = await getPatient(userId);
   return (
     <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container my-auto">
+      <section className="remove-scrollbar container my-auto p-4">
         <div className="sub-container max-w-[860px] flex-1 justify-between">
           <Image 
             src = "/assets/icons/logo-full.svg"
