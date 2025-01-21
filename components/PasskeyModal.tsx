@@ -24,25 +24,27 @@ import { decryptKey, encryptKey } from "@/lib/utils";
 
 const PasskeyModal = () => {
   const router = useRouter();
-  const path = usePathname();
-  const [open, setOpen] = useState(true);
-  const [passkey, setPasskey] = useState('');
-  const [error, setError] = useState('');
+  const path = usePathname(); // Get the current path of the page
+  const [open, setOpen] = useState(true); // State to control the modal's open/close status
+  const [passkey, setPasskey] = useState(''); // State to store the passkey input by the user
+  const [error, setError] = useState(''); // State to store any error messages related to the passkey input
 
+
+  // Check if the code is running in the browser (not on the server)
   const encryptedKey = typeof window !== 'undefined' ? window.localStorage.getItem('accessKey') : null; //get encrypted passkey from local storage
 
   useEffect(() => {
     const accessKey = encryptedKey && decryptKey(encryptedKey); //decrypt passkey
 
-    if (path) {
+    if (path) {   //check if current path is available
       if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-        setOpen(false);
-        router.push('/admin');
+        setOpen(false); //close modal
+        router.push('/admin');  //redirect to admin page
       } else {
-        setOpen(true);
+        setOpen(true);  //keep modal open
       }
     }
-  }, [encryptedKey])
+  }, [encryptedKey]) //dependency array (means run the effect whenever the encryptedKey changes)
 
   const closeModal = () => {
     setOpen(false);
@@ -50,7 +52,7 @@ const PasskeyModal = () => {
   }
 
   const validatePasskey = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault(); //default form submission prevented i.e. reload
+    e.preventDefault(); //prevent default form submission (i.e., page reload)
 
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       const encryptedKey = encryptKey(passkey); //encrypt passkey
