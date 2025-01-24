@@ -4,6 +4,7 @@ import { ID, Query } from "node-appwrite";
 import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, databases } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
+import { revalidatePath } from "next/cache";
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
     try {
@@ -74,5 +75,28 @@ export const getRecentAppointmentList = async () => {
       return parseStringify(data);
    } catch (error: any) {
       console.log(error);
+  }
+}
+
+export const updateAppointment = async ({ appointmentId, userId, appointment, type }: UpdateAppointmentParams) => {
+  try {
+    const updatedAppointment = await databases.updateDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId,
+      appointment
+    )
+    if (!updatedAppointment) {
+      throw new Error("Appointment not found");
+    }
+
+    // TODO SMS notification
+
+
+    // Ensure that the next time someone visits the /admin page, the server will fetch the latest data and update the cached version of the page.
+    revalidatePath('/admin');
+    return parseStringify(updatedAppointment);
+  } catch (error: any) {
+    console.log(error);
   }
 }

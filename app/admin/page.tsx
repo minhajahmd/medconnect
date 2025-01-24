@@ -55,6 +55,7 @@ const Admin = async () => {
           />
         </section>
 
+        {/* Define the structure and headers of the table. And provide the actual appointment data to be displayed in the table */}
         <DataTable columns={columns} data={appointments.documents}/>
 
       </main>
