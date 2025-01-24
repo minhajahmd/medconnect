@@ -38,10 +38,11 @@ const AppointmentForm = ({ userId, patientId, type, appointment, setOpen} : {
     //set initial values for the form fields.
     defaultValues: {
       primaryPhysician: appointment ? appointment.primaryPhysician : "",
-      schedule: appointment ? new Date(appointment.schedule) : new Date(),
+      schedule: appointment ? new Date(appointment?.schedule) : new Date(Date.now()),
       reason: appointment ? appointment.reason : "",
-      note: appointment ? appointment.note : "",
-      cancellationReason: appointment ? appointment.cancellationReason : "",
+      note: appointment?.note || "",
+      cancellationReason: appointment?.cancellationReason || "", 
+      // Safely assigns cancellationReason, falling back to an empty string if appointment or cancellationReason is null/undefined.
     },
   })
  
