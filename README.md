@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://youtu.be/lEflo_sc82g?feature=shared" target="_blank">
-      <img src="https://github.com/minhajahmd/medconnect/assets/images/Cover.png" alt="Project Banner">
+      <img src="https://github.com/minhajahmd/medconnect/blob/main/public/assets/images/Cover.png" alt="Project Banner">
     </a>
   <br />
 
