@@ -16,99 +16,138 @@
 
 </div>
 
-## 📋 <a name="table">Table of Contents</a>
+# MedConnect
 
-1. 🤖 [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-
-## <a name="introduction">🤖 Introduction</a>
-
-A healthcare patient management application that allows patients to easily register, book, and manage their appointments with doctors, featuring administrative tools for scheduling, confirming, and canceling appointments, along with SMS notifications, all built using Next.js.
-
-## <a name="tech-stack">⚙️ Tech Stack</a>
-
-- Next.js
-- Appwrite
-- Typescript
-- TailwindCSS
-- ShadCN
-- Twilio
-
-## <a name="features">🔋 Features</a>
-
-👉 **Register as a Patient**: Users can sign up and create a personal profile as a patient.
-
-👉 **Book a New Appointment with Doctor**: Patients can schedule appointments with doctors at their convenience and can book multiple appointments.
-
-👉 **Manage Appointments on Admin Side**: Administrators can efficiently view and handle all scheduled appointments.
-
-👉 **Confirm/Schedule Appointment from Admin Side**: Admins can confirm and set appointment times to ensure they are properly scheduled.
-
-👉 **Cancel Appointment from Admin Side**: Administrators have the ability to cancel any appointment as needed.
-
-👉 **Send SMS on Appointment Confirmation**: Patients receive SMS notifications to confirm their appointment details.
-
-👉 **Complete Responsiveness**: The application works seamlessly on all device types and screen sizes.
-
-👉 **File Upload Using Appwrite Storage**: Users can upload and store files securely within the app using Appwrite storage services.
-
-👉 **Manage and Track Application Performance Using Sentry**: The application uses Sentry to monitor and track its performance and detect any errors.
+A full-stack healthcare patient management platform built with Next.js and Appwrite. MedConnect streamlines the end-to-end patient journey — from registration and appointment booking to AI-assisted triage and admin-side workflow management.
 
 
-## <a name="quick-start">🤸 Quick Start</a>
+## Overview
 
-Follow these steps to set up the project locally on your machine.
+MedConnect was built to address common friction points in outpatient healthcare workflows. Patients can self-register, submit symptoms, and book appointments without administrative overhead. An AI triage layer automatically classifies symptom urgency, surfacing high-priority cases to providers first. Admins manage scheduling, confirmations, and cancellations through a secure role-gated dashboard.
 
-**Prerequisites**
 
-Make sure you have the following installed on your machine:
 
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
+## Tech Stack
 
-**Cloning the Repository**
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js (App Router), TypeScript, Tailwind CSS, ShadCN UI |
+| Backend | Next.js API Routes, Appwrite (Auth, Database, Storage) |
+| AI | OpenAI API (GPT-3.5 Turbo) |
+| Notifications | Twilio SMS |
+| Monitoring | Sentry |
+| Deployment | Vercel |
+
+
+
+## Features
+
+**Patient-facing**
+- Self-registration with profile creation and file upload via Appwrite Storage
+- Multi-step appointment booking with doctor selection and time slot management
+- Automated SMS confirmation on appointment scheduling via Twilio
+- AI-powered symptom triage — patients submit symptoms at registration and receive an urgency classification (High / Medium / Low) powered by OpenAI
+
+**Admin-facing**
+- Secure role-gated admin dashboard with session-based authentication
+- View all appointments with AI-generated urgency badges to prioritize high-risk cases
+- Confirm, reschedule, or cancel appointments with automated patient notifications
+- Real-time error tracking and performance monitoring via Sentry
+
+
+
+## AI Triage Feature
+
+The triage module is a custom addition built on top of the core platform. During patient registration, submitted symptoms are sent to a Next.js API route that queries the OpenAI API with a structured medical triage prompt. The response classifies urgency as High, Medium, or Low with a one-sentence clinical reason.
+
+The result is stored alongside the appointment record in Appwrite and surfaced as a color-coded badge in the admin dashboard — enabling providers to prioritize critical cases without manually reviewing every submission.
+
+```
+POST /api/triage
+Body: { symptoms: string }
+Response: { urgency: "High | Medium | Low", reason: string }
+```
+
+
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+- Appwrite instance (cloud or self-hosted)
+- OpenAI API key
+- Twilio account SID and auth token
+
+### Installation
 
 ```bash
 git clone https://github.com/minhajahmd/medconnect.git
 cd medconnect
-```
-
-**Installation**
-
-Install the project dependencies using npm:
-
-```bash
 npm install
 ```
 
-**Set Up Environment Variables**
+### Environment Variables
 
-Create a new file named `.env.local` in the root of your project and add the following content:
+Create a `.env.local` file in the root directory:
 
 ```env
-#APPWRITE
+# Appwrite
 NEXT_PUBLIC_ENDPOINT=https://cloud.appwrite.io/v1
-PROJECT_ID=
-API_KEY=
-DATABASE_ID=
-PATIENT_COLLECTION_ID=
-APPOINTMENT_COLLECTION_ID=
-NEXT_PUBLIC_BUCKET_ID=
+PROJECT_ID=your_project_id
+API_KEY=your_api_key
+DATABASE_ID=your_database_id
+PATIENT_COLLECTION_ID=your_patient_collection_id
+APPOINTMENT_COLLECTION_ID=your_appointment_collection_id
+NEXT_PUBLIC_BUCKET_ID=your_bucket_id
 
-NEXT_PUBLIC_ADMIN_PASSKEY=123456
+# OpenAI
+OPENAI_API_KEY=your_openai_api_key
+
+# Twilio
+TWILIO_ACCOUNT_SID=your_twilio_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=your_twilio_phone_number
+
+# Admin
+NEXT_PUBLIC_ADMIN_PASSKEY=your_admin_passkey
 ```
 
-Replace the placeholder values with your actual Appwrite credentials. You can obtain these credentials by signing up on the [Appwrite website](https://appwrite.io/).
-
-**Running the Project**
+### Run Locally
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-#
+
+
+## Project Structure
+
+```
+medconnect/
+├── app/
+│   ├── api/
+│   │   └── triage/          # OpenAI triage API route
+│   ├── admin/               # Admin dashboard
+│   └── patients/            # Patient registration and booking flows
+├── components/              # Reusable UI components
+├── lib/
+│   ├── actions/             # Appwrite server actions
+│   └── utils.ts
+└── types/                   # TypeScript type definitions
+```
+
+
+
+## Monitoring
+
+Application performance and error tracking are handled via Sentry. API error rates, p95 latency, and client-side exceptions are monitored across both patient and admin request flows.
+
+
+
+## License
+
+MIT
